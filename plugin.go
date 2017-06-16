@@ -242,6 +242,8 @@ func (p Plugin) Exec() error {
 				return err
 			}
 
+			log.Println(txt)
+
 			msg := tgbotapi.NewMessage(user, txt)
 			msg.ParseMode = p.Config.Format
 			p.Send(bot, msg)
