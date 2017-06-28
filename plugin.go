@@ -88,8 +88,7 @@ func escapeMarkdown(keys []string) []string {
 	var newKeys []string
 
 	for _, value := range keys {
-		value = strings.Replace(value, `\_`, `_`, -1)
-		value = strings.Replace(value, `_`, `\_`, -1)
+		value = escapeMarkdownOne(value)
 		if len(value) == 0 {
 			continue
 		}
@@ -97,6 +96,13 @@ func escapeMarkdown(keys []string) []string {
 	}
 
 	return newKeys
+}
+
+func escapeMarkdownOne(str string) string {
+	str = strings.Replace(str, `\_`, `_`, -1)
+	str = strings.Replace(str, `_`, `\_`, -1)
+
+	return str
 }
 
 func fileExist(keys []string) []string {
@@ -232,6 +238,16 @@ func (p Plugin) Exec() error {
 
 	if p.Config.Format == "markdown" {
 		message = escapeMarkdown(message)
+
+		p.Build.Message = escapeMarkdownOne(p.Build.Author)
+		p.Build.Branch = escapeMarkdownOne(p.Build.Branch)
+		p.Build.Author = escapeMarkdownOne(p.Build.Author)
+		p.Build.Email = escapeMarkdownOne(p.Build.Email)
+		p.Build.Link = escapeMarkdownOne(p.Build.Link)
+		p.Build.PR = escapeMarkdownOne(p.Build.PR)
+
+		p.Repo.Owner = escapeMarkdownOne(p.Repo.Owner)
+		p.Repo.Name = escapeMarkdownOne(p.Repo.Name)
 	}
 
 	// send message.
