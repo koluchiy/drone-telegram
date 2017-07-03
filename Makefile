@@ -1,7 +1,7 @@
 .PHONY: install build test html update docker_build docker_image docker_deploy clean version
 
 VERSION := $(shell git describe --tags --always || git rev-parse --short HEAD)
-DEPLOY_ACCOUNT := "koluchiy"
+DEPLOY_ACCOUNT := "appleboy"
 DEPLOY_IMAGE := "drone-telegram"
 
 ifneq ($(shell uname), Darwin)
